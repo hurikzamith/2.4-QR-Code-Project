@@ -33,15 +33,17 @@ const questions = [
   }
 ];
 
-
-
-
 inquirer.prompt(questions).then((answers) => {
   console.log('\nAnswers:');
   console.log(JSON.stringify(answers, null, '  '));
 
-  const urlValue = answers['url'];
+  var urlValue = answers['url'];
   var qr_svg = qr.image(urlValue);
   qr_svg.pipe(fs.createWriteStream(`${urlValue}.png`));
+
+  fs.writeFile("URL.txt", urlValue, (err) => {
+    if (err) throw err;
+    console.log("The file has been saved!");
+  });
 
 });
